@@ -5,14 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import edu.epn.wachiteam.moviles.coco_tourism.databinding.FragmentRegisterBinding
+import androidx.navigation.fragment.findNavController
+import edu.epn.wachiteam.moviles.coco_tourism.databinding.FragmentPointOfInterestBinding
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class RegisterFragment : Fragment() {
+class PointOfInterestFragment : Fragment() {
 
-    private var _binding: FragmentRegisterBinding? = null
+    private var _binding: FragmentPointOfInterestBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -23,7 +24,7 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        _binding = FragmentPointOfInterestBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -31,7 +32,9 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        binding.buttonSecond.setOnClickListener {
+            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+        }
     }
 
     override fun onDestroyView() {

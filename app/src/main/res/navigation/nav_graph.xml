@@ -13,13 +13,13 @@
 
         <action
             android:id="@+id/action_login_to_register"
-            app:destination="@id/SecondFragment" />
+            app:destination="@id/PointOfInterestFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="edu.epn.wachiteam.moviles.coco_tourism.SecondFragment"
+        android:id="@+id/PointOfInterestFragment"
+        android:name="edu.epn.wachiteam.moviles.coco_tourism.RegisterFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second" >
+        tools:layout="@layout/fragment_register" >
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"

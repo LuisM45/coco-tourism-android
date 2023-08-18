@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph2"
+    app:startDestination="@id/MainPageFragment">
+
+    <fragment
+        android:id="@+id/MainPageFragment"
+        android:name="edu.epn.wachiteam.moviles.coco_tourism.MainPageFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_main_page">
+        <action
+            android:id="@+id/action_MainPageFragment_to_PointOfInterestFragment"
+            app:destination="@id/PointOfInterestFragment" />
+        <action
+            android:id="@+id/action_MainPageFragment_to_MapFragment"
+            app:destination="@id/MapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/PointOfInterestFragment"
+        android:name="edu.epn.wachiteam.moviles.coco_tourism.PointOfInterestFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_point_of_interest">
+        <action
+            android:id="@+id/action_PointOfInterestFragment_to_MainPageFragment"
+            app:destination="@id/MainPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/MapFragment"
+        android:name="edu.epn.wachiteam.moviles.coco_tourism.MapsFragment"
+        android:label="Map Fragment"
+        tools:layout="@layout/fragment_point_of_interest">
+        <action
+            android:id="@+id/action_MapFragment_to_MainPageFragment"
+            app:destination="@id/MainPageFragment" />
+    </fragment>
+</navigation>

@@ -1,5 +1,6 @@
 package edu.epn.wachiteam.moviles.coco_tourism
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -36,8 +37,13 @@ class LoginFragment : Fragment() {
 //            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
 //        }
 
-        binding.btnLogin.setOnClickListener{
+        binding.tvRegister.setOnClickListener{
             findNavController().navigate(R.id.action_login_to_register)
+        }
+
+        binding.btnLogin.setOnClickListener {
+            Intent(context,MainActivity::class.java).run(::startActivity)
+            requireActivity().finish()
         }
     }
 
