@@ -43,7 +43,7 @@ class LoginFragment : Fragment() {
 
         binding.btnLogin.setOnClickListener {
             Intent(context,MainActivity::class.java).run(::startActivity)
-            requireActivity().finish()
+//            requireActivity().finish()
         }
     }
 

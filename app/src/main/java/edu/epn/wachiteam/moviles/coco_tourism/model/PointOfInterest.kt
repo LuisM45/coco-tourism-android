@@ -1,13 +1,14 @@
 package edu.epn.wachiteam.moviles.coco_tourism.model
 
-class PointOfInterest(
+data class PointOfInterest(
+    var id:String,
     var name:String,
-    var majorZone: MajorZone,
-    var minorZone: MinorZone,
-    var type: PointOfInterest.Type,
-    var reviews: Review,
-    var products: ArrayList<Product>,
-    var tags: ArrayList<String>
+    var majorZone: MajorZone? = null,
+    var minorZone: MinorZone? = null,
+    var type: Type? = null,
+    var reviews: Review? = null,
+    var products: ArrayList<Product>? = null,
+    var tags: ArrayList<String>? = null
 ){
 
     enum class Type{
