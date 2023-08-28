@@ -20,6 +20,8 @@ import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import edu.epn.wachiteam.moviles.coco_tourism.Utils
+import edu.epn.wachiteam.moviles.coco_tourism.Utils.Companion.list
+import edu.epn.wachiteam.moviles.coco_tourism.Utils.Companion.toBigPromise
 import edu.epn.wachiteam.moviles.coco_tourism.model.PointOfInterest
 import kotlinx.coroutines.yield
 import org.chromium.base.Promise
@@ -29,127 +31,149 @@ import kotlin.concurrent.thread
 
 class MapPlaces {
 
-    companion object{
-        lateinit var placesClient:PlacesClient;
-        fun initialize(placesClient:PlacesClient){
+    companion object {
+        lateinit var placesClient: PlacesClient;
+        fun initialize(placesClient: PlacesClient) {
             this.placesClient = placesClient
         }
 
+        fun getPlacesById(ids: List<String>, fields: List<Place.Field>): List<Promise<Place>> {
+            return ids.map { id -> getPlaceById(id, fields) }
+        }
+
+        fun getPlaceById(id: String, fields: List<Place.Field>): Promise<Place> {
+            val promise = Promise<Place>()
+            val request = FetchPlaceRequest.newInstance(id, fields)
+            placesClient.fetchPlace(request)
+                .addOnSuccessListener { promise.fulfill(it.place) }
+                .addOnFailureListener { e -> promise.reject(e); ;Log.e("Cookie",e.toString()) }
+
+            return promise
+        }
 
         fun getPlacesNearby(
-            fields:List<Place.Field>,
-            latLng:LatLng,
-            radius:Int,
-            maxcount: Int = 20,
-            keyword: String? = null,
-            language: String? = null,
-            maxprice: Int? = null,
-            minprice: Int? = null,
-            opennow: Boolean = false,
-            pagetoken: String? = null,
-            rankby: RankBy? = null,
-            type: Place.Type? = null
-        ):Promise<List<Place>>{
-            Log.i("Cookie","PlacesNearby Begin")
+            fields: List<Place.Field>, apiParameters: ApiParameters, maxcount: Int = 20): Promise<List<Place>> {
+            val promise = Promise<List<Place>>()
 
-            val parameters = mutableMapOf<String,Any>(
-                "location" to "${latLng.latitude},${latLng.longitude}",
-                "radius" to radius,
-                "key" to Globals.Maps.API_KEY)
-
-            if(keyword!=null) parameters["keyword"] = keyword
-            if(language!=null) parameters["language"] = language
-            if(maxprice!=null) parameters["maxprice"] = maxprice
-            if(minprice!=null) parameters["minprice"] = minprice
-            if(opennow) parameters["opennow"] = ""
-            if(pagetoken!=null) parameters["pagetoken"] = pagetoken
-            if(rankby!=null) parameters["rankby"] = rankby
-            if(type!=null) parameters["type"] = type.toString().lowercase()
-
-            val promise:Promise<List<Place>> = Promise()
-            val places:MutableList<Place> = mutableListOf()
+            val placesJson = getNearbyPlaces(apiParameters,maxcount)
+            placesJson.then(
+                { jsonList->
+                    jsonList
+                        .map { it.getJSONArray("results") }
+                        .map { it.list<JSONObject>() }
+                        .flatMap { it.asIterable() }
+                        .map { it.getString("place_id") }
+                        .map { getPlaceById(it, fields) }
+                        .let { toBigPromise(it) }
+                        .then{ promise.fulfill(it.map {p-> p!! }) }
+                },
+                {e->promise.reject(e); Log.e("Cookie",e.toString())}
+            )
 
 
-            getNearbyPlacesJSON(parameters,maxcount).then{jsonObjects->
-                jsonObjects.forEach{ jsonObject->
-                    Log.i("Cookie",jsonObject.toString())
-                    val results = jsonObject.getJSONArray("results")
-                    for(i in 0 until results.length()){
-                        val place = results.getJSONObject(i)
-                        getPlaceById(place.getString("place_id"), fields)
-                            .then{
-                                places.add(it)
-                                if(places.size>=maxcount){
-                                    promise.fulfill(places)
-                                }
-                            }
-                        }
-                    }
+
+            return promise
+        }
+
+
+
+        fun getNearbyPlaces(apiParameters: ApiParameters, maxcount: Int = 20): Promise<List<JSONObject>> {
+            val promise = Promise<List<JSONObject>>()
+            val places = mutableListOf<JSONObject>()
+            var remainingCount = maxcount
+
+            fun getNextPages(oldResponse: JSONObject, apiParameters: ApiParameters){
+                Log.i("Cookie","Pages: $remainingCount, ${oldResponse.has("next_page_token")}")
+                if(remainingCount<=0 || !oldResponse.has("next_page_token")){
+                    promise.fulfill(places)
+                    return
                 }
 
+                val newParameters = ApiParameters(
+                    pagetoken = oldResponse.getString("next_page_token"),
+                    key = apiParameters.key
+                )
+
+                getPlacesNearbyBatch(newParameters).then(
+                    {
+                        places.add(it)
+                        remainingCount -= it.getJSONArray("results").length()
+                        getNextPages(it,newParameters)
+                    },
+                    {promise.fulfill(places)}
+                )
+            }
+
+            getPlacesNearbyBatch(apiParameters).then(
+                {
+                    places.add(it)
+                    remainingCount -= it.getJSONArray("results").length()
+                    getNextPages(it,apiParameters)
+                },
+                {e-> promise.reject(e); ;Log.e("Cookie",e.toString())}
+            )
+
+            return promise
+        }
 
 
-            Log.i("Cookie","PlacesNearby End")
+        fun getPlacesNearbyBatch(apiParameters: ApiParameters): Promise<JSONObject> {
+            val promise: Promise<JSONObject> = Promise()
+            var queryUrl = Globals.Maps.API_URL + "?" + Utils.buildGetParms(apiParameters.map())
+            Log.i("Cookie","Query: $queryUrl")
+
+            val request = JsonObjectRequest(
+                Request.Method.GET,
+                queryUrl,
+                null,
+                { obj -> promise.fulfill(obj) },
+                { e -> promise.reject(e);Log.e("Cookie",e.toString()) }
+            )
+            Globals.Network.requestQueue.add(request)
+
             return promise
         }
 
 
-
-        private fun getNearbyPlacesJSON(parameters: Map<String,Any>,maxcount: Int): Promise<MutableList<JSONObject>> {
-                Log.i("Cookie","Seq init")
-                var newParameters = parameters
-                var currentCount = maxcount
-                val promise:Promise<MutableList<JSONObject>> = Promise()
-
-                if(maxcount<=0) return Promise.fulfilled(mutableListOf())
-
-
-                var queryUrl = Globals.Maps.API_URL+"?"+ Utils.buildGetParms(newParameters)
-                Log.i("Cookie",queryUrl)
-
-                newParameters = mutableMapOf("key" to newParameters["key"]!!,)
-
-                val jsonRequest = JsonObjectRequest(
-                        Request.Method.GET,
-                        queryUrl,
-                        null,
-                        {obj->
-                            Log.i("Cookie",obj.toString())
-                            currentCount -= obj.getJSONArray("results").length()
-                            if(!obj.has("next_page_token")) currentCount = 0
-                            else newParameters["pagetoken"] = obj.getString("next_page_token")
-
-                            getNearbyPlacesJSON(newParameters,currentCount).then {
-                                it.add(0,obj)
-                                promise.fulfill(it);
-                            }
-
-
-                            },
-                        {}
-                    )
-                Globals.Network.requestQueue.add(jsonRequest)
-
-            return promise
-        }
-        private fun getPlaceById(placeId:String,placeFields:List<Place.Field>): Promise<Place> {
-            val request = FetchPlaceRequest.newInstance(placeId,placeFields)
-            val task = placesClient.fetchPlace(request)
-            val promise: Promise<Place> = Promise()
-
-            task.addOnSuccessListener { response->
-                promise.fulfill(response.place)
-            }.addOnFailureListener { Log.e("Cookie",it.toString()) }
-
-            return promise
-        }
     }
-
-    enum class RankBy{
+    enum class RankBy {
         PROMINENCE, DISTANCE;
 
         override fun toString(): String {
             return super.toString().lowercase()
+        }
+    }
+
+    data class ApiParameters(
+        val location: LatLng? = null,
+        val radius: Int? = null,
+        val keyword: String? = null,
+        val language: String? = null,
+        val maxprice: Int? = null,
+        val minprice: Int? = null,
+        val opennow: Boolean = false,
+        val pagetoken: String? = null,
+        val rankby: RankBy? = null,
+        val type: Place.Type? = null,
+        val key: String = Globals.Maps.API_KEY
+    ){
+        fun map():Map<String,Any> {
+            val thisMap = mutableMapOf<String,Any>()
+            if(location!=null) thisMap["location"] = "${location.latitude},${location.longitude}"
+            if(radius!=null) thisMap["radius"] = radius
+            if(keyword!=null) thisMap["keyword"] = keyword
+            if(language!=null) thisMap["language"] = language
+            if(maxprice!=null) thisMap["maxprice"] = maxprice
+            if(minprice!=null) thisMap["minprice"] = minprice
+            if(opennow) thisMap["opennow"] = ""
+            if(pagetoken!=null) thisMap["pagetoken"] = pagetoken
+            if(rankby!=null) thisMap["rankby"] = rankby
+            if(type!=null) thisMap["type"] = type
+            thisMap["key"] = key
+    
+
+
+            return thisMap
         }
     }
 }
