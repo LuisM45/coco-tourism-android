@@ -50,9 +50,12 @@ class MainPageFragment : Fragment() {
         location.then{location->
             MapPlaces.getPlacesNearby(
                 listOf(Place.Field.NAME, Place.Field.ID, Place.Field.LAT_LNG, Place.Field.PHOTO_METADATAS),
-                LatLng(location.latitude,location.longitude),
-                1000
+                MapPlaces.ApiParameters(
+                    LatLng(location.latitude,location.longitude),
+                    1000),
+                maxcount = 60
             ).then{
+                Log.i("Cookie",it.size.toString())
                 placesDataPromise.fulfill(it)
             }
         }

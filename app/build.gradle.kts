@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -84,5 +85,12 @@ dependencies {
     implementation("com.google.maps.android:maps-utils-ktx:3.4.0")
     implementation("com.google.maps.android:android-maps-utils:2.3.0")
 
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
 
+    // FireAuth
+    implementation("com.firebaseui:firebase-ui-auth:8.0.2")
+
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
 }

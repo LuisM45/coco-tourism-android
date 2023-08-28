@@ -5,6 +5,8 @@ import android.text.Spanned
 import android.text.SpannedString
 import android.util.Log
 import org.chromium.base.Promise
+import org.json.JSONArray
+import org.json.JSONObject
 import java.net.URLEncoder
 import java.util.function.Supplier
 
@@ -46,6 +48,15 @@ public class Utils {
 
             }
             return bigPromise
+        }
+
+        fun <A> JSONArray.list():List<A>{
+            val returnList = mutableListOf<A>()
+            for(i in 0 until this.length()){
+                returnList.add(this.get(i) as A)
+            }
+
+            return returnList
         }
     }
 }

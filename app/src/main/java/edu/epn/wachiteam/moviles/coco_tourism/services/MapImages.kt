@@ -14,17 +14,19 @@ class MapImages {
             this.placesClient = placesClient
         }
 
+        fun getImages(photosMetadata: List<PhotoMetadata>): List<Promise<Bitmap>>{
+            return photosMetadata.map(::getImage)
+        }
+
         fun getImage(photoMetadata: PhotoMetadata): Promise<Bitmap>{
             val promise = Promise<Bitmap>()
             val request = FetchPhotoRequest.builder(photoMetadata)
-    //                .setMaxHeight()
-    //                .setMaxWidth()
+//                .setMaxHeight()
+//                .setMaxWidth()
                 .build()
-                placesClient.fetchPhoto(request).addOnSuccessListener {
-                    promise.fulfill(it.bitmap)
-                }.addOnFailureListener {
-                    promise.reject(it)
-                }
+                placesClient.fetchPhoto(request)
+                    .addOnSuccessListener {promise.fulfill(it.bitmap)}
+                    .addOnFailureListener {promise.reject(it)}
 
             return promise
         }

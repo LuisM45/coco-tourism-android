@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "255205870685",
+    "project_id": "a-moviles-software-242d5",
+    "storage_bucket": "a-moviles-software-242d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255205870685:android:cd4b12393269d1d7ead1b4",
+        "android_client_info": {
+          "package_name": "com.example.moviles_soft_01"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxhlbDjAjAHElmAONCNuOfL-7YdNgBIzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255205870685:android:be08b517af83d83aead1b4",
+        "android_client_info": {
+          "package_name": "edu.epn.wachiteam.moviles.coco_tourism"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxhlbDjAjAHElmAONCNuOfL-7YdNgBIzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

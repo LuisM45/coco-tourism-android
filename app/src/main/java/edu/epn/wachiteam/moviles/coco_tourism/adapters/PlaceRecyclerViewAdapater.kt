@@ -34,12 +34,10 @@ class PlaceRecyclerViewAdapater(
     }
 
     override fun getItemCount(): Int {
-        Log.i("Cookie","Item Count: ${places.size}")
         return places.size
     }
 
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
-        Log.i("Cookie","OnBindViewHolder")
         holder.tvName.setText(places[position].name)
         holder.ivPhoto.setImageBitmap(photos[position])
     }

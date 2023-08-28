@@ -52,8 +52,9 @@ class TestInit(val activity: Activity) {
             Log.i("Cookie",location.toString())
             MapPlaces.getPlacesNearby(
                 listOf(Place.Field.NAME,Place.Field.ID,Place.Field.LAT_LNG),
-                LatLng(location.latitude,location.longitude),
-                1000,
+                MapPlaces.ApiParameters(
+                    LatLng(location.latitude,location.longitude),
+                    1000),
                 maxcount = 20
                 ).then{ places-> placesPromise.fulfill(places) }
         }
