@@ -1,22 +1,23 @@
 package edu.epn.wachiteam.moviles.coco_tourism
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import edu.epn.wachiteam.moviles.coco_tourism.databinding.FragmentLoginBinding
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.IdpResponse
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.ktx.Firebase
+import edu.epn.wachiteam.moviles.coco_tourism.databinding.FragmentLoginBinding
+import edu.epn.wachiteam.moviles.coco_tourism.services.FireUser
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -28,6 +29,23 @@ class LoginFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    val locationPermissionRequest = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        when {
+            permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                Intent(context,MainActivity::class.java).run(::startActivity)
+                requireActivity().finish()
+            }
+            permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                Intent(context,MainActivity::class.java).run(::startActivity)
+                requireActivity().finish()
+            } else -> {
+            requireActivity().finish()
+        }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,9 +68,12 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_login_to_register)
         }
 
+
+//        requestPermissions()
 //        Intent(context,MainActivity::class.java).run(::startActivity)
         login()
 //        binding.btnLogin.setOnClickListener { login() }
+
     }
 
     fun login(){
@@ -68,15 +89,23 @@ class LoginFragment : Fragment() {
         loginAuthResponse.launch(signInIntent)
     }
 
+    fun requestPermissions(){
+
+        locationPermissionRequest.launch(arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION))
+
+    }
+
     fun afterSuccesfulLogin(res:IdpResponse){
         val token = FirebaseAuth.getInstance().currentUser!!.getIdToken(true)
         token.addOnSuccessListener {
             Log.i("Cookie",it.toString())
+            FireUser.initialize()
         }
             .addOnFailureListener { Log.i("Cookie","Login no bueno") }
 
-        Intent(context,MainActivity::class.java).run(::startActivity)
-        requireActivity().finish()
+        requestPermissions()
     }
 
     private val loginAuthResponse = registerForActivityResult(

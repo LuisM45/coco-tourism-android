@@ -91,6 +91,10 @@ dependencies {
 
     // FireAuth
     implementation("com.firebaseui:firebase-ui-auth:8.0.2")
-
     implementation("androidx.work:work-runtime-ktx:2.8.1")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+        implementation("com.google.firebase:firebase-auth-ktx")
+
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
 }

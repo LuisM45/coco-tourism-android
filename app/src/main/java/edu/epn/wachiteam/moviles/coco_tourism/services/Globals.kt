@@ -7,6 +7,7 @@ import com.android.volley.toolbox.DiskBasedCache
 import com.android.volley.toolbox.HurlStack
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
+import com.google.firebase.firestore.ktx.firestore
 
 class Globals {
     companion object{
@@ -15,6 +16,8 @@ class Globals {
     object Maps{
         val API_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
         val API_KEY = "AIzaSyCZnHvMtkadW64vde1xUHNfG2xWw6awITs"
+
+        val PLACE_COMMON_FIELDS = listOf(Place.Field.NAME, Place.Field.ID, Place.Field.LAT_LNG, Place.Field.PHOTO_METADATAS)
 
         fun initialize(activity:Activity){
             Places.initialize(activity, API_KEY)
@@ -32,5 +35,9 @@ class Globals {
             requestQueue = RequestQueue(cache, network).apply {start()}
         }
 
+    }
+
+    object Firebase{
+        val firebaseFirestore = com.google.firebase.ktx.Firebase.firestore
     }
 }
