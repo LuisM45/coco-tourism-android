@@ -19,16 +19,17 @@
 
         <ImageView
             android:id="@+id/iv_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/logo_bg"
-            android:foregroundTint="@color/logo_bg"
+            android:layout_width="387dp"
+            android:layout_height="175dp"
+            android:backgroundTint="#75DC62"
+            android:tint="#75DC62"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/landscape_photography_tips_yosemite_valley_feature"
-            tools:srcCompat="@drawable/landscape_photography_tips_yosemite_valley_feature" />
+            app:layout_constraintVertical_bias="0.516"
+            app:srcCompat="@drawable/mountain_sun_solid"
+            tools:srcCompat="@drawable/mountain_sun_solid" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
