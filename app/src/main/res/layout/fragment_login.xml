@@ -5,15 +5,18 @@
     android:id="@+id/login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".LoginFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="100dp"
         android:backgroundTint="@color/logo_bg"
         app:layout_constraintDimensionRatio="2:1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -32,50 +35,78 @@
             tools:srcCompat="@drawable/mountain_sun_solid" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <EditText
+        android:id="@+id/et_username"
+        style="@style/EditTextMainStyle"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:background="#E6E5E5"
+        android:ems="10"
+        android:hint="Usuario"
+        android:inputType="text"
+        android:textColor="#292929"
+        android:textColorHint="#424242"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_login" />
+
     <TextView
         android:id="@+id/tv_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="36dp"
+        android:fontFamily="sans-serif-black"
         android:text="Login"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <EditText
-        android:id="@+id/et_username"
-        style="@style/EditTextMainStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:hint="Usuario"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_login" />
-
-    <EditText
         android:id="@+id/et_password"
         style="@style/EditTextMainStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="28dp"
+        android:background="#E6E5E5"
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="text"
+        android:textColor="#292929"
+        android:textColorHint="#FF424242"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_username" />
 
-    <Button
-        android:id="@+id/btn_login"
+    <TextView
+        android:id="@+id/tv_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:layout_marginEnd="80dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Registrarse"
+        android:textColor="#434343"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_forgot_password"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_forgot_password"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn_login"
+        style="@style/FirebaseUI.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#75DC62"
+        android:text="Login"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
@@ -83,20 +114,13 @@
         android:id="@+id/tv_forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Recuperar Contraseña"
+        android:textColor="#434343"
         app:layout_constraintEnd_toStartOf="@+id/tv_register"
+        app:layout_constraintHorizontal_bias="0.425"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
-
-    <TextView
-        android:id="@+id/tv_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="100dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_forgot_password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_forgot_password"
-        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
