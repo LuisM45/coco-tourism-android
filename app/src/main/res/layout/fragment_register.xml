@@ -69,7 +69,12 @@
                 android:id="@+id/imageButton4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@android:drawable/btn_star" />
+                android:backgroundTint="#00FFFFFF"
+                android:scaleType="fitCenter"
+                android:scaleX="4.8"
+                android:scaleY="4.8"
+                android:src="@android:drawable/btn_star"
+                tools:src="@mipmap/microsoft_foreground" />
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -108,8 +113,13 @@
             <ImageButton
                 android:id="@+id/imageButton3"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@android:drawable/btn_star" />
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00FFFFFF"
+                android:scaleType="centerInside"
+                android:scaleX="4"
+                android:scaleY="4"
+                android:src="@android:drawable/btn_star"
+                tools:src="@mipmap/facebook_foreground" />
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -162,7 +172,11 @@
                 android:id="@+id/imageButton2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@android:drawable/btn_star" />
+                android:background="#00FFFFFF"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:src="@android:drawable/btn_star"
+                tools:src="@drawable/googleg_standard_color_18" />
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

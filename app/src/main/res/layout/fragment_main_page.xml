@@ -33,6 +33,7 @@
             style="@style/FirebaseUI.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:backgroundTint="#75DC62"
             android:drawableBottom="@drawable/mountain_sun_solid"
             android:text="Buscar"
@@ -40,7 +41,6 @@
             app:iconTint="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,12 +69,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_places"
-            android:layout_width="386dp"
+            android:layout_width="384dp"
             android:layout_height="214dp"
             android:layout_marginTop="16dp"
             app:layout_constraintBottom_toTopOf="@+id/button2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.64"
+            app:layout_constraintHorizontal_bias="0.486"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout6"
             app:layout_constraintVertical_bias="0.0">
