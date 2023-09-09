@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="80dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:foregroundTint="@color/design_default_color_error">
 
     <ImageView
         android:id="@+id/iv_photo"
@@ -31,20 +32,6 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_photo" />
 
     <Button
-        android:id="@+id/btn_favoritos"
-        style="@style/FirebaseUI.Button"
-        android:layout_width="27dp"
-        android:layout_height="35dp"
-        android:backgroundTint="#75DC62"
-        android:insetLeft="-11dp"
-        android:textColorHighlight="#00FFFFFF"
-        android:textColorLink="#00FFFFFF"
-        app:icon="@drawable/heart_regular"
-        app:iconTint="#E84E4E"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="-8dp" />
-
-    <Button
         android:id="@+id/btn_verMas"
         style="@style/FirebaseUI.Button"
         android:layout_width="77dp"
@@ -54,4 +41,21 @@
         android:textSize="8.5sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_name"
         tools:layout_editor_absoluteX="1dp" />
+
+    <ImageButton
+        android:id="@+id/ibtn_favorite"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:backgroundTint="#75DC62"
+        android:foregroundTint="#9A0000"
+        android:scaleType="centerCrop"
+        android:shadowColor="#00FFFFFF"
+        android:src="@drawable/heart_regular"
+        android:textColorHighlight="#00FFFFFF"
+        android:textColorLink="#00FFFFFF"
+        android:tint="#D40000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/heart_regular" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

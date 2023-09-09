@@ -17,7 +17,10 @@ class Globals {
         val API_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
         val API_KEY = "AIzaSyCZnHvMtkadW64vde1xUHNfG2xWw6awITs"
 
-        val PLACE_COMMON_FIELDS = listOf(Place.Field.NAME, Place.Field.ID, Place.Field.LAT_LNG, Place.Field.PHOTO_METADATAS)
+        val PLACE_COMMON_FIELDS = listOf(
+            Place.Field.NAME, Place.Field.ID, Place.Field.LAT_LNG, Place.Field.PHOTO_METADATAS,
+            Place.Field.ADDRESS, Place.Field.CURRENT_OPENING_HOURS, Place.Field.RATING, Place.Field.TYPES
+        )
 
         fun initialize(activity:Activity){
             Places.initialize(activity, API_KEY)

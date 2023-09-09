@@ -11,11 +11,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.IdpResponse
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
+import edu.epn.wachiteam.moviles.coco_tourism.Utils.Companion.toPromiseObserver
 import edu.epn.wachiteam.moviles.coco_tourism.databinding.FragmentLoginBinding
 import edu.epn.wachiteam.moviles.coco_tourism.services.FireUser
 
@@ -68,7 +68,41 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_login_to_register)
         }
 
+        binding.btnLogin.setOnClickListener { view->
+            Log.e("Cookie","Login Attempt")
+            if(binding.etUsername.text.isNullOrBlank()){
+                binding.tvExceptions.text = "El nombre de usuario no puede quedar en blanco"
+                return@setOnClickListener
+            }
+            if(binding.etPassword.text.isNullOrBlank()){
+                binding.tvExceptions.text = "La contraseña no puede quedar en blanco"
+                return@setOnClickListener
+            }
+            val username =  binding.etUsername.text.toString()
+            val password = binding.etPassword.text.toString()
 
+            FireUser.signInWithEmailAndPassword(username,password)
+
+                .then({
+                    requestPermissions()
+                },
+                {
+                    Log.e("Cookie",it.message.toString())
+                    binding.tvExceptions.text = it.localizedMessage.toString()
+                })
+        }
+
+        binding.tvForgotPassword.setOnClickListener {
+            if(binding.etUsername.text.isNullOrBlank()){
+                binding.tvExceptions.text = "Llene su nombre de usuario para continuar"
+                return@setOnClickListener
+            }
+
+            FireUser.sendPasswordResetEmail(binding.etUsername.text.toString()).toPromiseObserver()
+                .then{binding.tvExceptions.text = "Se ha enviado un correo de recuperación"}
+                .catch { binding.tvExceptions.text = it.message.toString() }
+
+        }
 //        requestPermissions()
 //        Intent(context,MainActivity::class.java).run(::startActivity)
         login()
@@ -77,16 +111,18 @@ class LoginFragment : Fragment() {
     }
 
     fun login(){
-        val providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build()
-        )
 
-        val signInIntent = AuthUI.getInstance()
-            .createSignInIntentBuilder()
-            .setAvailableProviders(providers)
-            .build()
 
-        loginAuthResponse.launch(signInIntent)
+//        val providers = arrayListOf(
+//            AuthUI.IdpConfig.EmailBuilder().build()
+//        )
+//
+//        val signInIntent = AuthUI.getInstance()
+//            .createSignInIntentBuilder()
+//            .setAvailableProviders(providers)
+//            .build()
+//
+//        loginAuthResponse.launch(signInIntent)
     }
 
     fun requestPermissions(){

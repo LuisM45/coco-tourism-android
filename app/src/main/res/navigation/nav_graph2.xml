@@ -16,11 +16,14 @@
         <action
             android:id="@+id/action_MainPageFragment_to_MapFragment"
             app:destination="@id/MapFragment" />
+        <action
+            android:id="@+id/action_MainPageFragment_to_FilterFragment"
+            app:destination="@id/FilterFragment" />
     </fragment>
     <fragment
         android:id="@+id/PointOfInterestFragment"
         android:name="edu.epn.wachiteam.moviles.coco_tourism.PointOfInterestFragment"
-        android:label="@string/second_fragment_label"
+        android:label="Información adicional"
         tools:layout="@layout/fragment_point_of_interest">
         <action
             android:id="@+id/action_PointOfInterestFragment_to_MainPageFragment"
@@ -33,6 +36,15 @@
         tools:layout="@layout/fragment_point_of_interest">
         <action
             android:id="@+id/action_MapFragment_to_MainPageFragment"
+            app:destination="@id/MainPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/FilterFragment"
+        android:name="edu.epn.wachiteam.moviles.coco_tourism.FilterConfigFragment"
+        android:label="Configuración de filtros"
+        tools:layout="@layout/fragment_filter_config">
+        <action
+            android:id="@+id/action_FilterFragment_to_MainPageFragment"
             app:destination="@id/MainPageFragment" />
     </fragment>
 </navigation>

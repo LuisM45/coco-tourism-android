@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.193"
         app:layout_constraintStart_toEndOf="@+id/constraintLayout4"
-        app:layout_constraintTop_toBottomOf="@+id/button">
+        app:layout_constraintTop_toBottomOf="@+id/btn_register">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -89,6 +89,7 @@
         android:ems="10"
         android:hint="Nombre"
         android:inputType="text"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +104,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button">
+        app:layout_constraintTop_toBottomOf="@+id/btn_register">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -149,8 +150,9 @@
         android:ems="10"
         android:hint="Repetir Contraseña"
         android:inputType="text"
-        app:layout_constraintTop_toBottomOf="@+id/et_password"
-        tools:layout_editor_absoluteX="100dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
@@ -161,7 +163,7 @@
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout4"
         app:layout_constraintHorizontal_bias="0.801"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button">
+        app:layout_constraintTop_toBottomOf="@+id/btn_register">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -182,7 +184,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_register"
         style="@style/FirebaseUI.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -193,6 +195,14 @@
         android:textColorLink="#75DC62"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_password_too" />
+
+    <TextView
+        android:id="@+id/tv_exceptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_password_too" />
 

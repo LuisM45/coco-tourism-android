@@ -125,4 +125,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
+    <TextView
+        android:id="@+id/tv_exceptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#CC0808"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_password" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

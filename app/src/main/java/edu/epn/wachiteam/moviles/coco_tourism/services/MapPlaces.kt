@@ -1,38 +1,24 @@
 package edu.epn.wachiteam.moviles.coco_tourism.services
 
-import android.app.Activity
 import android.util.Log
 import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.BasicNetwork
-import com.android.volley.toolbox.DiskBasedCache
-import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.JsonObjectRequest
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.Tasks
-import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.model.Place.Field
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
-import com.google.android.libraries.places.api.net.FetchPlaceResponse
 import com.google.android.libraries.places.api.net.PlacesClient
-import com.google.gson.JsonElement
-import com.google.gson.JsonObject
 import edu.epn.wachiteam.moviles.coco_tourism.Utils
 import edu.epn.wachiteam.moviles.coco_tourism.Utils.Companion.list
 import edu.epn.wachiteam.moviles.coco_tourism.Utils.Companion.toBigPromise
-import edu.epn.wachiteam.moviles.coco_tourism.model.PointOfInterest
-import kotlinx.coroutines.yield
 import org.chromium.base.Promise
-import org.json.JSONArray
 import org.json.JSONObject
-import kotlin.concurrent.thread
 
 class MapPlaces {
 
     companion object {
+        val DEFAULT_FIELDS: List<Place.Field> = Globals.Maps.PLACE_COMMON_FIELDS
         lateinit var placesClient: PlacesClient;
+        lateinit var lastPlace: Place // Had to do this sorry, fragment
         fun initialize(placesClient: PlacesClient) {
             this.placesClient = placesClient
         }
@@ -64,7 +50,7 @@ class MapPlaces {
                         .flatMap { it.asIterable() }
                         .map { it.getString("place_id") }
                         .map { getPlaceById(it, fields) }
-                        .let { toBigPromise(it) }
+                        .let { it.toBigPromise() }
                         .then{ promise.fulfill(it.map {p-> p!! }) }
                 },
                 {e->promise.reject(e); Log.e("Cookie",e.toString())}
