@@ -77,7 +77,7 @@
         android:ems="10"
         android:fontFamily="sans-serif-condensed-medium"
         android:hint="Contraseña"
-        android:inputType="text"
+        android:inputType="text|textPassword"
         android:textColor="#292929"
         android:textColorHint="#FF424242"
         app:layout_constraintEnd_toEndOf="parent"
