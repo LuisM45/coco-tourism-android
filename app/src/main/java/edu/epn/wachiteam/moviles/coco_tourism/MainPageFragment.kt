@@ -3,6 +3,7 @@ package edu.epn.wachiteam.moviles.coco_tourism
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,6 +55,8 @@ class MainPageFragment : Fragment() {
 
         with(binding){
             tbtnShowFavorites.setOnClickListener { if(tbtnShowFavorites.isChecked) loadToGoPlaces() else loadNearbyPlaces()}
+            btnFilter.setOnClickListener { findNavController().navigate(R.id.action_MainPageFragment_to_FilterFragment) }
+            btnRefresh.setOnClickListener { if(tbtnShowFavorites.isChecked) loadToGoPlaces() else loadNearbyPlaces() }
         }
         loadNearbyPlaces()
 
@@ -63,16 +66,20 @@ class MainPageFragment : Fragment() {
     fun loadNearbyPlaces():Promise<Unit>{
         return Location.getLocation()
             .promisePipe { location->
+                Log.i("Cookie","Tag1")
+                Log.i("Cookie",location.toString())
                 initMap(LatLng(location.latitude,location.longitude))
                 MapPlaces.getPlacesNearby( MapPlaces.DEFAULT_FIELDS,
-                    MapPlaces.ApiParameters(LatLng(location.latitude,location.longitude),1000),
-                    maxcount = 20) }
+                    MapPlaces.ApiParameters(LatLng(location.latitude,location.longitude),MapPlaces.radiusSearch),MapPlaces.QUERY_SIZE) }
             .promisePipe{ places ->
+                Log.i("Cookie","Tag2")
+                Log.i("Cookie",places.toString())
                 setMarkers(places)
                 this.places = places.toMutableList()
                 places.map { place -> MapImages.getImage(place) }.toBigPromise()
             }
             .pipe {images->
+                Log.i("Cookie","Tag3")
                 this.images = images.toMutableList()
                 reloadRecyclerView()
                 return@pipe
@@ -93,6 +100,7 @@ class MainPageFragment : Fragment() {
     }
 
     fun reloadRecyclerView(){
+        Log.i("Cookie","Tag4")
         placesAdapter = PlaceRecyclerViewAdapater(places, images,::focusOnPlace,::startDetailsOfPlace,requireContext())
 
         binding.rvPlaces.adapter = placesAdapter

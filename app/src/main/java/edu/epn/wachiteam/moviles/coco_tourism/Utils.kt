@@ -9,6 +9,8 @@ import java.net.URLEncoder
 public class Utils {
     companion object{
 
+        fun <A> idem(a:A):A = a
+
         fun buildGetParms(map:Map<String,Any>):String{
             return map.mapValues { (k,v)-> v.toString() }
                 .mapKeys { (k,v)-> k.replace("\n","") }

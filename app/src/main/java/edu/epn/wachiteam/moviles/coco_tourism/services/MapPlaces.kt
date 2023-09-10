@@ -9,6 +9,7 @@ import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.PlacesClient
 import edu.epn.wachiteam.moviles.coco_tourism.Utils
 import edu.epn.wachiteam.moviles.coco_tourism.Utils.Companion.list
+import edu.epn.wachiteam.moviles.coco_tourism.Utils.Companion.pipe
 import edu.epn.wachiteam.moviles.coco_tourism.Utils.Companion.toBigPromise
 import org.chromium.base.Promise
 import org.json.JSONObject
@@ -17,6 +18,11 @@ class MapPlaces {
 
     companion object {
         val DEFAULT_FIELDS: List<Place.Field> = Globals.Maps.PLACE_COMMON_FIELDS
+        var QUERY_SIZE = 20
+        var locationSearch = LatLng(0.0, 0.0)
+        var radiusSearch = 1000
+        var typeFilters = listOf<Place.Type>()
+
         lateinit var placesClient: PlacesClient;
         lateinit var lastPlace: Place // Had to do this sorry, fragment
         fun initialize(placesClient: PlacesClient) {
@@ -63,10 +69,20 @@ class MapPlaces {
 
 
 
-        fun getNearbyPlaces(apiParameters: ApiParameters, maxcount: Int = 20): Promise<List<JSONObject>> {
+        fun getNearbyPlaces(apiParameters: ApiParameters, maxcount: Int = QUERY_SIZE): Promise<List<JSONObject>> {
+            Log.i("Cookie","Nearby Place")
+            Log.i("Cookie",if(apiParameters.type==null) "null" else apiParameters.type.toString()!!)
+            if(apiParameters.type == null && typeFilters.isNotEmpty()){
+                return typeFilters
+                    .map {type-> getNearbyPlaces(apiParameters.copy(type = type),maxcount)}
+                    .toBigPromise()
+                    .pipe {listOfLists-> listOfLists.filterNotNull().flatten() }
+            }
+
             val promise = Promise<List<JSONObject>>()
             val places = mutableListOf<JSONObject>()
             var remainingCount = maxcount
+
 
             fun getNextPages(oldResponse: JSONObject, apiParameters: ApiParameters){
                 Log.i("Cookie","Pages: $remainingCount, ${oldResponse.has("next_page_token")}")
@@ -131,30 +147,30 @@ class MapPlaces {
     }
 
     data class ApiParameters(
-        val location: LatLng? = null,
-        val radius: Int? = null,
-        val keyword: String? = null,
-        val language: String? = null,
-        val maxprice: Int? = null,
-        val minprice: Int? = null,
-        val opennow: Boolean = false,
-        val pagetoken: String? = null,
-        val rankby: RankBy? = null,
-        val type: Place.Type? = null,
-        val key: String = Globals.Maps.API_KEY
+        var location: LatLng? = null,
+        var radius: Int? = null,
+        var keyword: String? = null,
+        var language: String? = null,
+        var maxprice: Int? = null,
+        var minprice: Int? = null,
+        var opennow: Boolean = false,
+        var pagetoken: String? = null,
+        var rankby: RankBy? = null,
+        var type: Place.Type? = null,
+        var key: String = Globals.Maps.API_KEY
     ){
         fun map():Map<String,Any> {
             val thisMap = mutableMapOf<String,Any>()
-            if(location!=null) thisMap["location"] = "${location.latitude},${location.longitude}"
-            if(radius!=null) thisMap["radius"] = radius
-            if(keyword!=null) thisMap["keyword"] = keyword
-            if(language!=null) thisMap["language"] = language
-            if(maxprice!=null) thisMap["maxprice"] = maxprice
-            if(minprice!=null) thisMap["minprice"] = minprice
+            if(location!=null) thisMap["location"] = "${location!!.latitude},${location!!.longitude}"
+            if(radius!=null) thisMap["radius"] = radius!!
+            if(keyword!=null) thisMap["keyword"] = keyword!!
+            if(language!=null) thisMap["language"] = language!!
+            if(maxprice!=null) thisMap["maxprice"] = maxprice!!
+            if(minprice!=null) thisMap["minprice"] = minprice!!
             if(opennow) thisMap["opennow"] = ""
-            if(pagetoken!=null) thisMap["pagetoken"] = pagetoken
-            if(rankby!=null) thisMap["rankby"] = rankby
-            if(type!=null) thisMap["type"] = type
+            if(pagetoken!=null) thisMap["pagetoken"] = pagetoken!!
+            if(rankby!=null) thisMap["rankby"] = rankby!!
+            if(type!=null) thisMap["type"] = type!!.toString().lowercase()
             thisMap["key"] = key
     
 

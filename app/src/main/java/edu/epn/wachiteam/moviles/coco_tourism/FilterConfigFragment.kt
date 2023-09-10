@@ -5,55 +5,46 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.google.android.libraries.places.api.model.Place
+import edu.epn.wachiteam.moviles.coco_tourism.databinding.FragmentFilterConfigBinding
+import edu.epn.wachiteam.moviles.coco_tourism.services.MapPlaces
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FilterConfigFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FilterConfigFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    lateinit var binding: FragmentFilterConfigBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_filter_config, container, false)
+        binding = FragmentFilterConfigBinding.inflate(inflater, container, false)
+
+        with(binding){
+            btnAccept.setOnClickListener {
+                setServiceVariables()
+                findNavController().navigate(R.id.action_FilterFragment_to_MainPageFragment)
+            }
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FilterConfigFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FilterConfigFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    fun setServiceVariables(){
+        MapPlaces.typeFilters = with(binding){
+            mutableListOf<Place.Type>()
+                .apply { if(cbCafe.isChecked) add(Place.Type.CAFE) }
+                .apply { if(cbMuseum.isChecked) add(Place.Type.MUSEUM) }
+                .apply { if(cbRestaurant.isChecked) add(Place.Type.RESTAURANT)}
+                .apply { if(cbStore.isChecked) add(Place.Type.STORE) }
+                .apply { if(cbArtGallery.isChecked) add(Place.Type.ART_GALLERY) }
+                .apply { if(cbShoppingMall.isChecked) add(Place.Type.SHOPPING_MALL) }
+
+        }
+
+        try {
+            MapPlaces.radiusSearch = binding.etRadius.text.toString().toInt()
+        }catch (e: NumberFormatException) {}
+
+
     }
 }
