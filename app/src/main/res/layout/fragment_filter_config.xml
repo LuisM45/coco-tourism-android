@@ -9,46 +9,100 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
 
-        <TextView
-            android:id="@+id/textView2"
+        <CheckBox
+            android:id="@+id/cb_store"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Configure sus parametros de búsqueda" />
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="Tiendas"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/cb_cafe"
+            app:layout_constraintTop_toBottomOf="@+id/cb_cafe" />
+
+        <Button
+            android:id="@+id/btn_accept"
+            style="@style/FirebaseUI.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#75DC62"
+            android:text="Aceptar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cb_art_gallery" />
+
+        <CheckBox
+            android:id="@+id/cb_art_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="Galerías"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/cb_museum"
+            app:layout_constraintTop_toBottomOf="@+id/cb_museum" />
+
+        <CheckBox
+            android:id="@+id/cb_museum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="Muesos"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/cb_restaurant"
+            app:layout_constraintTop_toBottomOf="@+id/cb_restaurant" />
+
+        <CheckBox
+            android:id="@+id/cb_cafe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="Café"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/et_radius"
+            app:layout_constraintTop_toBottomOf="@+id/et_radius" />
 
         <EditText
             android:id="@+id/et_radius"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
             android:ems="10"
+            android:fontFamily="sans-serif-condensed-light"
             android:hint="Distancia máxima"
             android:inputType="numberDecimal"
+            android:textColor="#292929"
+            android:textColorHint="#424242"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-        <CheckBox
-            android:id="@+id/cb_cafe"
+        <TextView
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Café"
-            app:layout_constraintStart_toStartOf="@+id/et_radius"
-            app:layout_constraintTop_toBottomOf="@+id/et_radius" />
-
-        <CheckBox
-            android:id="@+id/cb_store"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tiendas"
-            app:layout_constraintStart_toStartOf="@+id/cb_cafe"
-            app:layout_constraintTop_toBottomOf="@+id/cb_cafe" />
+            android:layout_marginTop="76dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="Configure sus parametros de búsqueda"
+            android:textColor="#000000"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="6dp" />
 
         <CheckBox
             android:id="@+id/cb_shopping_mall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-condensed-medium"
             android:text="Centros comerciales"
+            android:textColor="#000000"
             app:layout_constraintStart_toStartOf="@+id/cb_store"
             app:layout_constraintTop_toBottomOf="@+id/cb_store" />
 
@@ -56,35 +110,12 @@
             android:id="@+id/cb_restaurant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed-medium"
             android:text="Restaurant"
+            android:textColor="#000000"
             app:layout_constraintStart_toStartOf="@+id/cb_shopping_mall"
             app:layout_constraintTop_toBottomOf="@+id/cb_shopping_mall" />
 
-        <CheckBox
-            android:id="@+id/cb_museum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Muesos"
-            app:layout_constraintStart_toStartOf="@+id/cb_restaurant"
-            app:layout_constraintTop_toBottomOf="@+id/cb_restaurant" />
-
-        <CheckBox
-            android:id="@+id/cb_art_gallery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Galerías"
-            app:layout_constraintStart_toStartOf="@+id/cb_museum"
-            app:layout_constraintTop_toBottomOf="@+id/cb_museum" />
-
-        <Button
-            android:id="@+id/btn_accept"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Aceptar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cb_art_gallery" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -105,6 +105,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:backgroundTint="#75DC62"
+        android:fontFamily="sans-serif-medium"
         android:text="Login"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
