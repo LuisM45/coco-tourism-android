@@ -24,22 +24,23 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.244" />
 
-        <Button
-            android:id="@+id/btn_refresh"
-            style="@style/FirebaseUI.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:backgroundTint="#75DC62"
-            android:drawableBottom="@drawable/mountain_sun_solid"
-            android:text="Buscar"
-            app:icon="@drawable/mountain_sun_solid"
-            app:iconTint="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+    <Button
+        android:id="@+id/btn_refresh"
+        style="@style/FirebaseUI.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#75DC62"
+        android:drawableBottom="@drawable/mountain_sun_solid"
+        android:text="Buscar"
+        app:icon="@drawable/mountain_sun_solid"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.547"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout6"
             android:layout_width="0dp"
             android:layout_height="400dp"
@@ -83,27 +84,32 @@
         </androidx.recyclerview.widget.RecyclerView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ToggleButton
-            android:id="@+id/tbtn_show_favorites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="Favoritos"
-            android:textOff="Todos"
-            android:textOn="Favoritos"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_refresh"
-            app:layout_constraintStart_toEndOf="@+id/btn_refresh"
-            app:layout_constraintTop_toTopOf="@+id/btn_refresh" />
+    <ToggleButton
+        android:id="@+id/tbtn_show_favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Favoritos"
+        android:textOff="Todos"
+        android:textOn="Favoritos"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_refresh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_refresh"
+        app:layout_constraintTop_toTopOf="@+id/btn_refresh" />
 
-        <Button
-            android:id="@+id/btn_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="Filtros"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_refresh"
-            app:layout_constraintEnd_toStartOf="@+id/btn_refresh"
-            app:layout_constraintTop_toTopOf="@+id/btn_refresh"
-            app:layout_constraintVertical_bias="0.0" />
+    <Button
+        android:id="@+id/btn_filter"
+        style="@style/FirebaseUI.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#75DC62"
+        android:text="Filtros"
+        app:icon="@drawable/magnifying_glass_solid"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_refresh"
+        app:layout_constraintEnd_toStartOf="@+id/btn_refresh"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_refresh"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
