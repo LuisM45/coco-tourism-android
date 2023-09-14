@@ -14,7 +14,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.Place
+import edu.epn.wachiteam.moviles.coco_tourism.Utils.Companion.pipe
 import edu.epn.wachiteam.moviles.coco_tourism.databinding.FragmentPointOfInterestBinding
+import edu.epn.wachiteam.moviles.coco_tourism.services.Location
 import edu.epn.wachiteam.moviles.coco_tourism.services.MapImages
 import edu.epn.wachiteam.moviles.coco_tourism.services.MapPlaces
 
@@ -51,10 +53,18 @@ class PointOfInterestFragment : Fragment() {
             MapImages.getImage(place).then{imageView2.setImageBitmap(it)}
             tvName.text = place.name
             tvAddress.text = place.address
-            tvType.text = place.types?.toString()
+            tvType.text = place.types?.map { it.toString().capitalize() }?.joinToString(", ") ?: ""
             tvSchedules.text = place.currentOpeningHours?.weekdayText.toString()
             tvReviews.text = place.rating?.toString()
-            tvDistance.text = "Idk"
+
+            Location.getLocation()
+                .pipe { LatLng(it.latitude,it.longitude) }
+                .pipe {
+                    FloatArray(1).apply {
+                        android.location.Location.distanceBetween(it.latitude,it.longitude,place.latLng.latitude,place.latLng.longitude,this)
+                    }[0]
+                }
+                .then{ tvDistance.text = "$it m" }
         }
     }
 

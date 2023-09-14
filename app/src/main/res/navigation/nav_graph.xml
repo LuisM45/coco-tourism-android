@@ -8,17 +8,17 @@
     <fragment
         android:id="@+id/LoginFragment"
         android:name="edu.epn.wachiteam.moviles.coco_tourism.LoginFragment"
-        android:label="@string/first_fragment_label"
+        android:label="Login"
         tools:layout="@layout/fragment_login" >
 
         <action
             android:id="@+id/action_login_to_register"
-            app:destination="@id/PointOfInterestFragment" />
+            app:destination="@id/RegisterFragment" />
     </fragment>
     <fragment
-        android:id="@+id/PointOfInterestFragment"
+        android:id="@+id/RegisterFragment"
         android:name="edu.epn.wachiteam.moviles.coco_tourism.RegisterFragment"
-        android:label="@string/second_fragment_label"
+        android:label="Register"
         tools:layout="@layout/fragment_register" >
 
         <action
